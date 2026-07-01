@@ -1,8 +1,13 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ConsultantCard from "../components/ConsultantCard.astro";
 import { SITE, absoluteUrl, withBase, CONTACT_ACTION, CONTACT_AJAX } from "../lib/site";
+import heroImg from "../assets/hero-workspace.jpg";
+import modulaireImg from "../assets/notion-modulaire.jpg";
+import iaImg from "../assets/ia-integree.jpg";
+import humainImg from "../assets/accompagnement-humain.jpg";
 
 const consultants = (await getCollection("consultants")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -47,16 +52,17 @@ const features = [
     text: "Chaque équipe crée ses propres vues, process et automatisations — sans développeur, sans usine à gaz.",
   },
   {
-    ico: "✨",
-    title: "L’IA nativement intégrée",
-    text: "Une IA qui travaille directement dans vos données : recherche, rédaction, agents et automatisations. Comme dans aucun autre outil.",
-  },
-  {
     ico: "🎯",
     title: "Une seule source de vérité",
     text: "Fini l’information éparpillée entre fichiers, drives et mails. Tout est lié, retrouvable et à jour.",
   },
 ];
+
+const iaFeature = {
+  ico: "✨",
+  title: "L’IA nativement intégrée",
+  text: "Une IA qui travaille directement dans vos données : recherche, rédaction, agents et automatisations. Comme dans aucun autre outil.",
+};
 
 const compareRows = [
   {
@@ -112,22 +118,34 @@ const formAction = CONTACT_ACTION;
   <section class="hero">
     <div class="hero-grid-bg" aria-hidden="true"></div>
     <div class="container hero-inner">
-      <span class="eyebrow" data-reveal>Le collectif des consultants Notion en France</span>
-      <h1 data-reveal data-reveal-delay="60">
-        Pilotez votre entreprise sur Notion, avec un expert près de chez vous.
-      </h1>
-      <p class="lead" data-reveal data-reveal-delay="120">
-        Des consultants Notion indépendants réunis pour aider les TPE, PME et PMI françaises à
-        gérer toute leur activité dans un seul outil — modulaire, personnalisable et augmenté par
-        l’IA.
-      </p>
-      <div class="hero-cta" data-reveal data-reveal-delay="180">
-        <a class="btn btn--primary btn--lg" href={withBase("/#consultants")}>Trouver un consultant</a>
-        <a class="btn btn--secondary btn--lg" href={withBase("/#contact")}>Rejoindre le collectif</a>
+      <div class="hero-copy">
+        <span class="eyebrow" data-reveal>Le collectif des consultants Notion en France</span>
+        <h1 data-reveal data-reveal-delay="60">
+          Pilotez votre entreprise sur Notion, avec un expert près de chez vous.
+        </h1>
+        <p class="lead" data-reveal data-reveal-delay="120">
+          Des consultants Notion indépendants réunis pour aider les TPE, PME et PMI françaises à
+          gérer toute leur activité dans un seul outil — modulaire, personnalisable et augmenté par
+          l’IA.
+        </p>
+        <div class="hero-cta" data-reveal data-reveal-delay="180">
+          <a class="btn btn--primary btn--lg" href={withBase("/#consultants")}>Trouver un consultant</a>
+          <a class="btn btn--secondary btn--lg" href={withBase("/#contact")}>Rejoindre le collectif</a>
+        </div>
+        <p class="hero-note" data-reveal data-reveal-delay="220">
+          Indépendants · Qualifiés · Proches du terrain, partout en France.
+        </p>
       </div>
-      <p class="hero-note" data-reveal data-reveal-delay="220">
-        Indépendants · Qualifiés · Proches du terrain, partout en France.
-      </p>
+      <div class="hero-illus" data-reveal data-reveal-delay="140">
+        <Image
+          src={heroImg}
+          alt="Un dirigeant travaille sur son ordinateur, entouré de blocs Notion (tâches, tableau, document)."
+          width={720}
+          class="illus"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
     </div>
   </section>
 
@@ -165,6 +183,15 @@ const formAction = CONTACT_ACTION;
           de votre métier.
         </p>
       </div>
+      <div class="section-illus" data-reveal data-reveal-delay="60">
+        <Image
+          src={modulaireImg}
+          alt="Blocs modulaires de Notion reliés entre eux : document, tableau, calendrier, wiki et kanban."
+          width={680}
+          class="illus"
+          loading="lazy"
+        />
+      </div>
       <div class="card-grid">
         {
           features.map((f, i) => (
@@ -177,6 +204,23 @@ const formAction = CONTACT_ACTION;
             </article>
           ))
         }
+      </div>
+
+      <div class="ia-showcase" data-reveal data-reveal-delay="80">
+        <div class="ia-illus">
+          <Image
+            src={iaImg}
+            alt="Une étoile « AI » au centre de plusieurs documents et données reliés entre eux."
+            width={620}
+            class="illus"
+            loading="lazy"
+          />
+        </div>
+        <div class="ia-copy">
+          <div class="ico" aria-hidden="true">{iaFeature.ico}</div>
+          <h3>{iaFeature.title}</h3>
+          <p>{iaFeature.text}</p>
+        </div>
       </div>
 
       <div
@@ -217,17 +261,28 @@ const formAction = CONTACT_ACTION;
   <!-- FACTEUR HUMAIN -->
   <section class="section" id="humain">
     <div class="container">
-      <div class="callout" data-reveal>
-        <div class="ico" aria-hidden="true">🤝</div>
-        <div>
-          <h3>Un outil puissant mérite un accompagnement humain.</h3>
-          <p>
-            Notion se met en place vite… mais un système de gestion qui tient dans la durée ne
-            s’improvise pas. C’est avec un <strong>consultant qualifié</strong> — et mieux encore,
-            <strong>en présentiel, avec un expert de votre région</strong> — que la mise en place
-            est la plus efficace : il comprend votre métier, vos flux et vos équipes, et construit
-            un système que vous saurez faire vivre.
-          </p>
+      <div class="callout callout--media" data-reveal>
+        <div class="callout-body">
+          <div class="ico" aria-hidden="true">🤝</div>
+          <div>
+            <h3>Un outil puissant mérite un accompagnement humain.</h3>
+            <p>
+              Notion se met en place vite… mais un système de gestion qui tient dans la durée ne
+              s’improvise pas. C’est avec un <strong>consultant qualifié</strong> — et mieux encore,
+              <strong>en présentiel, avec un expert de votre région</strong> — que la mise en place
+              est la plus efficace : il comprend votre métier, vos flux et vos équipes, et construit
+              un système que vous saurez faire vivre.
+            </p>
+          </div>
+        </div>
+        <div class="callout-illus">
+          <Image
+            src={humainImg}
+            alt="Deux personnes travaillent ensemble sur un ordinateur devant une carte de France."
+            width={560}
+            class="illus"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>

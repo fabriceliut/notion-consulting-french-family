@@ -432,7 +432,16 @@ strong {
   overflow: hidden;
 }
 .hero-inner {
-  max-width: 760px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 64px);
+}
+.hero-copy {
+  max-width: 640px;
+}
+.hero-illus {
+  justify-self: end;
 }
 .hero h1 {
   margin-bottom: 20px;
@@ -697,6 +706,97 @@ strong {
 .callout p {
   color: var(--text-muted);
   margin: 0;
+}
+
+/* =============================================================
+   Illustrations (trait noir sur blanc — fondu sur fond chaud)
+   ============================================================= */
+.illus {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Le fond blanc devient transparent sur les fonds chauds/colorés */
+  mix-blend-mode: multiply;
+}
+.hero-illus .illus {
+  max-width: 560px;
+  margin-inline: auto;
+}
+.section-illus {
+  max-width: 660px;
+  margin: 4px auto clamp(36px, 5vw, 52px);
+}
+.ia-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 56px);
+  margin-top: clamp(40px, 6vw, 64px);
+  padding: clamp(24px, 4vw, 40px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+}
+.ia-showcase .illus {
+  max-width: 520px;
+}
+.ia-copy .ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+  background: var(--primary-soft);
+}
+.ia-copy h3 {
+  margin-bottom: 10px;
+}
+.ia-copy p {
+  color: var(--text-muted);
+  margin: 0;
+}
+.callout--media {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 48px);
+}
+.callout--media .callout-body {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.callout-illus .illus {
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+@media (max-width: 860px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+  .hero-copy {
+    max-width: none;
+  }
+  .hero-illus {
+    justify-self: center;
+    max-width: 440px;
+    width: 100%;
+  }
+  .ia-showcase,
+  .callout--media {
+    grid-template-columns: 1fr;
+  }
+  .ia-illus {
+    order: -1;
+  }
+  .ia-showcase .illus,
+  .callout-illus .illus {
+    max-width: 420px;
+    margin-inline: auto;
+  }
 }
 
 /* =============================================================
