@@ -4,13 +4,11 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 // Base canonique du site.
-// Domaine personnalisé (GitHub Pages + CNAME) : site = domaine, base = "/".
-// Pour un déploiement "project pages" (https://<user>.github.io/<repo>/),
-// remplacez `site` par "https://fabriceliut.github.io", `base` par "/notion-consulting-french-family/",
-// et supprimez public/CNAME.
+// Déploiement « project pages » GitHub : https://fabriceliut.github.io/notion-consulting-french-family/
+// Pour un domaine personnalisé (CNAME) : site = domaine, base = "/", et rétablir public/CNAME.
 export default defineConfig({
-  site: "https://collectif-notion-france.fr",
-  base: "/",
+  site: "https://fabriceliut.github.io",
+  base: "/notion-consulting-french-family/",
   trailingSlash: "ignore",
   build: {
     inlineStylesheets: "auto",

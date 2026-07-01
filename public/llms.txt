@@ -15,9 +15,9 @@ Des experts Notion français se réunissent pour faire avancer Notion en France,
 La mise en place la plus efficace se fait avec un consultant qualifié, idéalement en présentiel avec un expert de votre région.
 
 ## Consultants
-- Fabrice Liut — Lyon (Auvergne-Rhône-Alpes) : organisation, Notion, IA. https://collectif-notion-france.fr/consultants/fabrice-liut
-- Marie Bernard — Paris (interventions dans toute la France) : transformation pédagogique, IA et Notion pour l'enseignement supérieur et la formation. https://collectif-notion-france.fr/consultants/marie-bernard
+- Fabrice Liut — Lyon (Auvergne-Rhône-Alpes) : organisation, Notion, IA. https://fabriceliut.github.io/notion-consulting-french-family/consultants/fabrice-liut
+- Marie Bernard — Paris (interventions dans toute la France) : transformation pédagogique, IA et Notion pour l'enseignement supérieur et la formation. https://fabriceliut.github.io/notion-consulting-french-family/consultants/marie-bernard
 
 ## Contact
 Formulaire en bas de la page d'accueil : orientation vers le bon consultant, ou candidature pour rejoindre le collectif.
-https://collectif-notion-france.fr/#contact
+https://fabriceliut.github.io/notion-consulting-french-family/#contact

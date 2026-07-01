@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import LocationBadge from "./LocationBadge.astro";
 import TagList from "./TagList.astro";
+import { withBase } from "../lib/site";
 
 interface Props {
   consultant: CollectionEntry<"consultants">;
@@ -27,6 +28,6 @@ const { data, id } = consultant;
   <p class="cc-bio">{data.bioShort}</p>
   <TagList tags={data.tags} />
   <div class="cc-foot">
-    <a class="btn btn--secondary" href={`/consultants/${id}`}>Voir le profil</a>
+    <a class="btn btn--secondary" href={withBase(`/consultants/${id}`)}>Voir le profil</a>
   </div>
 </article>

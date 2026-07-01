@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://collectif-notion-france.fr/sitemap-index.xml
+Sitemap: https://fabriceliut.github.io/notion-consulting-french-family/sitemap-index.xml

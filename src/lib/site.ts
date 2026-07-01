@@ -20,8 +20,23 @@ export const NAV_LINKS = [
   { href: "/#contact", label: "Contact" },
 ] as const;
 
-/** Construit une URL absolue à partir d'un chemin, en respectant `site`. */
-export function absoluteUrl(path: string, site: URL | undefined): string {
-  const base = site ? site.toString().replace(/\/$/, "") : "";
+/** Base du site (ex. "/notion-consulting-french-family/"), injectée par Astro. */
+export const BASE = import.meta.env.BASE_URL;
+
+/**
+ * Préfixe un chemin interne par la base du site.
+ * Ex. withBase("/#contact") -> "/notion-consulting-french-family/#contact".
+ * Les URL absolues (http…) et ancres pures (#…) sont laissées inchangées.
+ */
+export function withBase(path: string): string {
+  if (/^https?:\/\//.test(path) || path.startsWith("#")) return path;
+  const base = BASE.endsWith("/") ? BASE.slice(0, -1) : BASE;
+  if (path === "/") return `${base}/`;
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+/** Construit une URL absolue (site + base + chemin) pour canonical/OG/JSON-LD. */
+export function absoluteUrl(path: string, site: URL | undefined): string {
+  const origin = site ? site.toString().replace(/\/$/, "") : "";
+  return `${origin}${withBase(path)}`;
 }

@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../lib/site";
 const year = new Date().getFullYear();
 ---
 
@@ -8,9 +9,9 @@ const year = new Date().getFullYear();
       © {year} Collectif Notion France — collectif indépendant, non affilié à Notion Labs, Inc.
     </p>
     <ul class="footer-links">
-      <li><a href="/#raison-detre">Raison d’être</a></li>
-      <li><a href="/#consultants">Consultants</a></li>
-      <li><a href="/#contact">Contact</a></li>
+      <li><a href={withBase("/#raison-detre")}>Raison d’être</a></li>
+      <li><a href={withBase("/#consultants")}>Consultants</a></li>
+      <li><a href={withBase("/#contact")}>Contact</a></li>
     </ul>
   </div>
 </footer>

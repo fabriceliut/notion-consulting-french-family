@@ -2,15 +2,15 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ConsultantCard from "../components/ConsultantCard.astro";
-import { SITE } from "../lib/site";
+import { SITE, absoluteUrl, withBase } from "../lib/site";
 
 const consultants = (await getCollection("consultants")).sort(
   (a, b) => a.data.order - b.data.order,
 );
 
 const site = Astro.site;
-const orgId = new URL("/#org", site).toString();
-const siteUrl = new URL("/", site).toString();
+const orgId = absoluteUrl("/#org", site);
+const siteUrl = absoluteUrl("/", site);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -21,12 +21,12 @@ const jsonLd = {
       name: SITE.name,
       url: siteUrl,
       description: "Collectif de consultants Notion indépendants en France.",
-      logo: new URL("/favicon.svg", site).toString(),
+      logo: absoluteUrl("/favicon.svg", site),
       areaServed: "FR",
     },
     {
       "@type": "WebSite",
-      "@id": new URL("/#website", site).toString(),
+      "@id": absoluteUrl("/#website", site),
       url: siteUrl,
       name: SITE.name,
       inLanguage: "fr-FR",
@@ -122,8 +122,8 @@ const formAction = `https://formspree.io/f/${SITE.formspreeId}`;
         l’IA.
       </p>
       <div class="hero-cta" data-reveal data-reveal-delay="180">
-        <a class="btn btn--primary btn--lg" href="/#consultants">Trouver un consultant</a>
-        <a class="btn btn--secondary btn--lg" href="/#contact">Rejoindre le collectif</a>
+        <a class="btn btn--primary btn--lg" href={withBase("/#consultants")}>Trouver un consultant</a>
+        <a class="btn btn--secondary btn--lg" href={withBase("/#contact")}>Rejoindre le collectif</a>
       </div>
       <p class="hero-note" data-reveal data-reveal-delay="220">
         Indépendants · Qualifiés · Proches du terrain, partout en France.
@@ -269,7 +269,7 @@ const formAction = `https://formspree.io/f/${SITE.formspreeId}`;
               Le collectif s’agrandit. Rejoignez des experts indépendants qui poussent Notion en
               France.
             </p>
-            <a class="btn btn--primary" href="/#contact">Rejoindre le collectif</a>
+            <a class="btn btn--primary" href={withBase("/#contact")}>Rejoindre le collectif</a>
           </div>
         </article>
       </div>
