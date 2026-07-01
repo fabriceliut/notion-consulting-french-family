@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://collectif-notion-france.fr/sitemap-index.xml

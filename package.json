@@ -1,0 +1,24 @@
+{
+  "name": "collectif-notion-france",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site du Collectif Notion France — collectif de consultants Notion indépendants.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.0.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.2",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^5.8.0"
+  }
+}

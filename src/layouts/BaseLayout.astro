@@ -1,0 +1,176 @@
+---
+import { SITE } from "../lib/site";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Chemin (relatif au site) de la page, pour canonical + og:url. */
+  path?: string;
+  ogType?: "website" | "profile" | "article";
+  /** Variante d'en-tête : « full » (accueil) ou « minimal » (fiches). */
+  headerVariant?: "full" | "minimal";
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  path = "/",
+  ogType = "website",
+  headerVariant = "full",
+} = Astro.props;
+
+const site = Astro.site;
+const canonical = new URL(path, site).toString().replace(/(?<!:)\/{2,}/g, "/");
+const ogImage = new URL(SITE.ogImage, site).toString();
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content={SITE.themeColor} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={SITE.locale} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Polices : preconnect + stylesheet (pas d'@import CSS) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <Header variant={headerVariant} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Interactions sobres — respect de prefers-reduced-motion.
+      (() => {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // Header : bordure + blur au scroll.
+        const header = document.querySelector<HTMLElement>(".site-header");
+        if (header) {
+          const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+        }
+
+        // Menu mobile.
+        const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+        if (toggle && header) {
+          toggle.addEventListener("click", () => {
+            const open = header.classList.toggle("nav-open");
+            toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+          header.querySelectorAll<HTMLAnchorElement>(".nav-links a").forEach((a) => {
+            a.addEventListener("click", () => {
+              header.classList.remove("nav-open");
+              toggle.setAttribute("aria-expanded", "false");
+            });
+          });
+        }
+
+        // Reveal au scroll.
+        const revealEls = document.querySelectorAll<HTMLElement>("[data-reveal]");
+        if (reduce || !("IntersectionObserver" in window)) {
+          revealEls.forEach((el) => el.classList.add("is-visible"));
+        } else {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((e) => {
+                if (e.isIntersecting) {
+                  const el = e.target as HTMLElement;
+                  const delay = el.getAttribute("data-reveal-delay");
+                  if (delay) el.style.transitionDelay = `${delay}ms`;
+                  el.classList.add("is-visible");
+                  io.unobserve(el);
+                }
+              });
+            },
+            { rootMargin: "0px 0px -8% 0px", threshold: 0.1 },
+          );
+          revealEls.forEach((el) => io.observe(el));
+        }
+
+        // Formulaire de contact (soumission AJAX Formspree + fallback natif).
+        const form = document.getElementById("contact-form") as HTMLFormElement | null;
+        if (form) {
+          const status = form.querySelector<HTMLElement>(".form-status");
+          form.addEventListener("submit", (ev) => {
+            const action = form.getAttribute("action") || "";
+            // Endpoint non configuré : on laisse la soumission native (fallback).
+            if (action.includes("VOTRE_ID_FORMSPREE")) return;
+            ev.preventDefault();
+            const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+            let label = "";
+            if (btn) {
+              label = btn.textContent || "";
+              btn.disabled = true;
+              btn.textContent = "Envoi…";
+            }
+            fetch(action, {
+              method: "POST",
+              body: new FormData(form),
+              headers: { Accept: "application/json" },
+            })
+              .then((r) => {
+                if (!r.ok) throw new Error("bad response");
+                form.reset();
+                if (status) {
+                  status.className = "form-status is-success";
+                  status.textContent =
+                    "Merci ! Votre message a bien été envoyé. Le collectif vous répond rapidement.";
+                }
+              })
+              .catch(() => {
+                if (status) {
+                  status.className = "form-status is-error";
+                  status.textContent =
+                    "Une erreur est survenue. Réessayez ou écrivez-nous directement par email.";
+                }
+              })
+              .finally(() => {
+                if (btn) {
+                  btn.disabled = false;
+                  btn.textContent = label || "Envoyer le message";
+                }
+              });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

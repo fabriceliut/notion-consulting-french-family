@@ -1,0 +1,23 @@
+# Collectif Notion France
+
+> Collectif de consultants Notion indépendants en France. Nous aidons les TPE, PME et PMI françaises à piloter toute leur activité sur Notion — un outil unique, modulaire, personnalisable et augmenté par l'IA.
+
+## Raison d'être
+Des experts Notion français se réunissent pour faire avancer Notion en France, convaincus que les TPE/PME/PMI ont tout intérêt à gérer leur entreprise sur Notion plutôt que sur tout autre outil.
+
+## Pourquoi Notion (vs suites Google / Microsoft)
+- Modulaire par nature : docs, wikis, bases de données, projets et CRM dans un même espace.
+- Personnalisable à l'infini, sans développeur.
+- IA nativement intégrée, au cœur des données et des process.
+- Une seule source de vérité, contre une information éclatée entre fichiers, drives et mails.
+
+## L'accompagnement humain
+La mise en place la plus efficace se fait avec un consultant qualifié, idéalement en présentiel avec un expert de votre région.
+
+## Consultants
+- Fabrice Liut — Lyon (Auvergne-Rhône-Alpes) : organisation, Notion, IA. https://collectif-notion-france.fr/consultants/fabrice-liut
+- Marie Bernard — Paris (interventions dans toute la France) : transformation pédagogique, IA et Notion pour l'enseignement supérieur et la formation. https://collectif-notion-france.fr/consultants/marie-bernard
+
+## Contact
+Formulaire en bas de la page d'accueil : orientation vers le bon consultant, ou candidature pour rejoindre le collectif.
+https://collectif-notion-france.fr/#contact

@@ -1,0 +1,156 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LocationBadge from "../../components/LocationBadge.astro";
+import TagList from "../../components/TagList.astro";
+import { SITE } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const consultants = await getCollection("consultants");
+  return consultants.map((consultant) => ({
+    params: { slug: consultant.id },
+    props: { consultant },
+  }));
+}
+
+const { consultant } = Astro.props;
+const { data } = consultant;
+const { Content } = await render(consultant);
+
+const site = Astro.site;
+const path = `/consultants/${consultant.id}`;
+const pageUrl = new URL(path, site).toString();
+
+const personLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: data.name,
+  jobTitle: `Consultant Notion — ${data.role}`,
+  url: pageUrl,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: data.city,
+    addressRegion: data.region,
+    addressCountry: "FR",
+  },
+  areaServed: "France",
+  knowsAbout: data.knowsAbout,
+  sameAs: data.sameAs,
+  memberOf: {
+    "@type": "Organization",
+    name: SITE.name,
+    url: new URL("/", site).toString(),
+  },
+};
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Accueil",
+      item: new URL("/", site).toString(),
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Consultants",
+      item: new URL("/#consultants", site).toString(),
+    },
+    { "@type": "ListItem", position: 3, name: data.name, item: pageUrl },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${data.seo.title} — Collectif Notion France`}
+  description={data.seo.description}
+  path={path}
+  ogType="profile"
+  headerVariant="minimal"
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(personLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <div class="section">
+    <div class="container">
+      <a class="back-link" href="/#consultants">
+        <svg
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+        Retour aux consultants
+      </a>
+
+      <div class="detail-head">
+        <span
+          class="avatar"
+          style={`background:var(--tag-${data.avatarColor}-bg)`}
+          aria-hidden="true"
+        >
+          {data.initials}
+        </span>
+        <div>
+          <h1 style="margin-bottom:6px">{data.name}</h1>
+          <p class="lead" style="margin-bottom:12px">{data.role}</p>
+          <LocationBadge label={data.locationLabel} />
+        </div>
+      </div>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <TagList tags={data.tags} class="detail-tags" />
+
+      {
+        data.info.length > 0 && (
+          <>
+            <h2 style="font-size:var(--fs-h3); margin-top:2rem">Informations</h2>
+            <ul class="info-list" style="margin:16px 0 32px">
+              {data.info.map((row) => (
+                <li>
+                  {row.k && <span class="k">{row.k}</span>}
+                  <span class="v">{row.v}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      {
+        data.links.length > 0 && (
+          <div class="detail-links">
+            {data.links.map((link) => (
+              <a
+                class={`btn ${link.primary ? "btn--primary" : "btn--secondary"}`}
+                href={link.href}
+                {...link.external ? { target: "_blank", rel: "noopener" } : {}}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .detail-tags {
+    margin: 24px 0 32px;
+  }
+</style>

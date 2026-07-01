@@ -1,0 +1,370 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ConsultantCard from "../components/ConsultantCard.astro";
+import { SITE } from "../lib/site";
+
+const consultants = (await getCollection("consultants")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const site = Astro.site;
+const orgId = new URL("/#org", site).toString();
+const siteUrl = new URL("/", site).toString();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": orgId,
+      name: SITE.name,
+      url: siteUrl,
+      description: "Collectif de consultants Notion indépendants en France.",
+      logo: new URL("/favicon.svg", site).toString(),
+      areaServed: "FR",
+    },
+    {
+      "@type": "WebSite",
+      "@id": new URL("/#website", site).toString(),
+      url: siteUrl,
+      name: SITE.name,
+      inLanguage: "fr-FR",
+      publisher: { "@id": orgId },
+    },
+  ],
+};
+
+const features = [
+  {
+    ico: "🧩",
+    title: "Modulaire par nature",
+    text: "Docs, wikis, bases de données, projets, CRM : tout dans un même espace, assemblé comme des blocs selon vos besoins.",
+  },
+  {
+    ico: "🎛️",
+    title: "Personnalisable à l’infini",
+    text: "Chaque équipe crée ses propres vues, process et automatisations — sans développeur, sans usine à gaz.",
+  },
+  {
+    ico: "✨",
+    title: "L’IA nativement intégrée",
+    text: "Une IA qui travaille directement dans vos données : recherche, rédaction, agents et automatisations. Comme dans aucun autre outil.",
+  },
+  {
+    ico: "🎯",
+    title: "Une seule source de vérité",
+    text: "Fini l’information éparpillée entre fichiers, drives et mails. Tout est lié, retrouvable et à jour.",
+  },
+];
+
+const compareRows = [
+  {
+    crit: "Structure",
+    notion: "Un espace tout-en-un, modulaire",
+    other: "Des applis séparées (Docs, Sheets, Drive, Word, Excel, SharePoint) à assembler",
+  },
+  {
+    crit: "Personnalisation",
+    notion: "Chaque process se modèle sans développeur",
+    other: "Gabarits rigides, adaptation limitée",
+  },
+  {
+    crit: "IA",
+    notion: "Native, au cœur de vos données et process",
+    other: "Ajoutée par-dessus, cloisonnée par application",
+  },
+  {
+    crit: "Information",
+    notion: "Reliée, une seule source de vérité",
+    other: "Éclatée entre fichiers, dossiers et boîtes mail",
+  },
+  {
+    crit: "Prise en main",
+    notion: "Un seul environnement à apprivoiser",
+    other: "Plusieurs outils, plusieurs logiques",
+  },
+];
+
+const regions = [
+  "Auvergne-Rhône-Alpes",
+  "Île-de-France",
+  "Nouvelle-Aquitaine",
+  "Occitanie",
+  "Hauts-de-France",
+  "Grand Est",
+  "Provence-Alpes-Côte d’Azur",
+  "Pays de la Loire",
+  "Bretagne",
+  "Normandie",
+  "Bourgogne-Franche-Comté",
+  "Centre-Val de Loire",
+  "Autre / International",
+];
+
+const formAction = `https://formspree.io/f/${SITE.formspreeId}`;
+---
+
+<BaseLayout>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <span class="eyebrow" data-reveal>Le collectif des consultants Notion en France</span>
+      <h1 data-reveal data-reveal-delay="60">
+        Pilotez votre entreprise sur Notion, avec un expert près de chez vous.
+      </h1>
+      <p class="lead" data-reveal data-reveal-delay="120">
+        Des consultants Notion indépendants réunis pour aider les TPE, PME et PMI françaises à
+        gérer toute leur activité dans un seul outil — modulaire, personnalisable et augmenté par
+        l’IA.
+      </p>
+      <div class="hero-cta" data-reveal data-reveal-delay="180">
+        <a class="btn btn--primary btn--lg" href="/#consultants">Trouver un consultant</a>
+        <a class="btn btn--secondary btn--lg" href="/#contact">Rejoindre le collectif</a>
+      </div>
+      <p class="hero-note" data-reveal data-reveal-delay="220">
+        Indépendants · Qualifiés · Proches du terrain, partout en France.
+      </p>
+    </div>
+  </section>
+
+  <!-- RAISON D'ÊTRE -->
+  <section class="section" id="raison-detre">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Notre raison d’être</span>
+        <h2>Faire avancer Notion en France, ensemble.</h2>
+      </div>
+      <div class="prose" data-reveal data-reveal-delay="80">
+        <p>
+          Nous sommes des experts Notion indépendants, réunis en collectif pour faire avancer
+          Notion en France. Nous partageons une conviction simple : les
+          <strong>TPE, PME et PMI françaises</strong> ont tout à gagner à piloter leur entreprise
+          sur Notion plutôt que sur n’importe quel autre outil.
+        </p>
+        <p>
+          Un espace unique, modulaire, qui s’adapte à leur façon de travailler — et où l’IA
+          devient un vrai levier du quotidien. Notre mission : rendre cette approche accessible,
+          avec des professionnels qualifiés, proches du terrain et de vos réalités de dirigeant.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- POURQUOI NOTION -->
+  <section class="section section--warm" id="pourquoi-notion">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Pourquoi Notion</span>
+        <h2>Un seul outil, pensé pour s’adapter à vous.</h2>
+        <p>
+          Là où les suites bureautiques classiques imposent leurs cases, Notion se façonne autour
+          de votre métier.
+        </p>
+      </div>
+      <div class="card-grid">
+        {
+          features.map((f, i) => (
+            <article class="feature" data-reveal data-reveal-delay={i * 60}>
+              <div class="ico" aria-hidden="true">
+                {f.ico}
+              </div>
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div
+        class="section-head"
+        style="margin-top: clamp(56px,7vw,88px); margin-bottom:24px;"
+        data-reveal
+      >
+        <h3 style="font-size:var(--fs-h3)">Notion vs suites Google / Microsoft</h3>
+      </div>
+      <div class="compare-wrap" data-reveal data-reveal-delay="80">
+        <table class="compare">
+          <caption class="sr-only" style="position:absolute;left:-9999px">
+            Comparaison entre Notion et les suites Google / Microsoft
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Critère</th>
+              <th scope="col" class="col-notion">Notion</th>
+              <th scope="col">Suites Google / Microsoft</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              compareRows.map((row) => (
+                <tr>
+                  <td class="crit">{row.crit}</td>
+                  <td class="col-notion">{row.notion}</td>
+                  <td>{row.other}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACTEUR HUMAIN -->
+  <section class="section" id="humain">
+    <div class="container">
+      <div class="callout" data-reveal>
+        <div class="ico" aria-hidden="true">🤝</div>
+        <div>
+          <h3>Un outil puissant mérite un accompagnement humain.</h3>
+          <p>
+            Notion se met en place vite… mais un système de gestion qui tient dans la durée ne
+            s’improvise pas. C’est avec un <strong>consultant qualifié</strong> — et mieux encore,
+            <strong>en présentiel, avec un expert de votre région</strong> — que la mise en place
+            est la plus efficace : il comprend votre métier, vos flux et vos équipes, et construit
+            un système que vous saurez faire vivre.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSULTANTS -->
+  <section class="section section--warm" id="consultants">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Le collectif</span>
+        <h2>Nos consultants Notion</h2>
+        <p>
+          Chaque membre est indépendant et intervient dans sa région. Cliquez sur un profil pour
+          en savoir plus.
+        </p>
+      </div>
+      <div class="consultant-grid">
+        {
+          consultants.length === 0 && (
+            <p class="cc-bio" style="grid-column:1/-1">
+              Le collectif se constitue. Les premiers profils seront bientôt en ligne.
+            </p>
+          )
+        }
+        {
+          consultants.map((consultant, i) => (
+            <ConsultantCard consultant={consultant} revealDelay={i * 80} />
+          ))
+        }
+
+        <article
+          class="consultant-card consultant-card--join"
+          data-reveal
+          data-reveal-delay={consultants.length * 80}
+        >
+          <div>
+            <p class="cc-name" style="margin-bottom:8px">Vous êtes consultant Notion&nbsp;?</p>
+            <p class="cc-bio">
+              Le collectif s’agrandit. Rejoignez des experts indépendants qui poussent Notion en
+              France.
+            </p>
+            <a class="btn btn--primary" href="/#contact">Rejoindre le collectif</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-layout">
+        <div class="section-head" style="margin-bottom:0" data-reveal>
+          <span class="eyebrow">Contact</span>
+          <h2>Parlons de votre projet.</h2>
+          <p>
+            Une question, un projet Notion, ou l’envie de rejoindre le collectif&nbsp;? Écrivez-nous
+            : nous vous orientons vers le bon consultant, idéalement dans votre région.
+          </p>
+        </div>
+        <div class="form-card" data-reveal data-reveal-delay="80">
+          <form id="contact-form" action={formAction} method="POST">
+            <div class="field">
+              <label for="objet">Votre demande <span class="req">*</span></label>
+              <select class="select" id="objet" name="objet" required>
+                <option value="Être orienté vers un consultant">
+                  Être orienté vers un consultant Notion
+                </option>
+                <option value="Rejoindre le collectif">
+                  Rejoindre le collectif en tant que consultant
+                </option>
+                <option value="Autre">Autre question</option>
+              </select>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="nom">Nom <span class="req">*</span></label>
+                <input class="input" id="nom" name="nom" type="text" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="email">Email <span class="req">*</span></label>
+                <input
+                  class="input"
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="entreprise">Entreprise</label>
+                <input
+                  class="input"
+                  id="entreprise"
+                  name="entreprise"
+                  type="text"
+                  autocomplete="organization"
+                />
+              </div>
+              <div class="field">
+                <label for="region">Région</label>
+                <select class="select" id="region" name="region">
+                  <option value="">— Sélectionnez —</option>
+                  {regions.map((r) => <option>{r}</option>)}
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="message">Message <span class="req">*</span></label>
+              <textarea
+                class="textarea"
+                id="message"
+                name="message"
+                required
+                placeholder="Décrivez votre besoin en quelques lignes…"></textarea>
+            </div>
+            <input
+              type="hidden"
+              name="_subject"
+              value="Nouveau message — Collectif Notion France"
+            />
+            <div class="hp" aria-hidden="true">
+              <label>Ne pas remplir<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <button class="btn btn--primary btn--lg" type="submit" style="width:100%">
+              Envoyer le message
+            </button>
+            <p class="form-note">
+              Réponse rapide du collectif. Vos données ne servent qu’à vous répondre.
+            </p>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

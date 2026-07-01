@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+import LocationBadge from "./LocationBadge.astro";
+import TagList from "./TagList.astro";
+
+interface Props {
+  consultant: CollectionEntry<"consultants">;
+  revealDelay?: number;
+}
+const { consultant, revealDelay } = Astro.props;
+const { data, id } = consultant;
+---
+
+<article class="consultant-card" data-reveal data-reveal-delay={revealDelay}>
+  <div class="cc-top">
+    <span class="avatar" style={`background:var(--tag-${data.avatarColor}-bg)`} aria-hidden="true">
+      {data.initials}
+    </span>
+    <div>
+      <p class="cc-name">{data.name}</p>
+      <p class="cc-role">{data.role}</p>
+    </div>
+  </div>
+  <p style="margin:0 0 12px">
+    <LocationBadge label={data.locationLabel} />
+  </p>
+  <p class="cc-bio">{data.bioShort}</p>
+  <TagList tags={data.tags} />
+  <div class="cc-foot">
+    <a class="btn btn--secondary" href={`/consultants/${id}`}>Voir le profil</a>
+  </div>
+</article>

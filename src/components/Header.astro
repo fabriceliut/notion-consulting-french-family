@@ -1,0 +1,53 @@
+---
+import Logo from "./Logo.astro";
+import { NAV_LINKS } from "../lib/site";
+
+interface Props {
+  variant?: "full" | "minimal";
+}
+const { variant = "full" } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Collectif Notion France — accueil">
+      <Logo size={28} />
+      <span class="brand-text">Collectif Notion France</span>
+    </a>
+
+    {
+      variant === "full" ? (
+        <>
+          <nav aria-label="Navigation principale">
+            <ul class="nav-links">
+              {NAV_LINKS.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div class="nav-actions">
+            <a class="btn btn--secondary" href="/#contact">
+              Rejoindre le collectif
+            </a>
+            <a class="btn btn--primary" href="/#consultants">
+              Trouver un consultant
+            </a>
+            <button class="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            </button>
+          </div>
+        </>
+      ) : (
+        <div class="nav-actions">
+          <a class="btn btn--primary" href="/#consultants">
+            Tous les consultants
+          </a>
+        </div>
+      )
+    }
+  </div>
+</header>

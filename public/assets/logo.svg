@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" role="img" aria-label="Collectif Notion France">
+  <rect x="0" y="0" width="28" height="28" rx="7" fill="#37352f"/>
+  <rect x="7" y="7.5" width="14" height="2.2" rx="1.1" fill="#ffffff"/>
+  <rect x="7" y="12.9" width="14" height="2.2" rx="1.1" fill="#ffffff" opacity="0.72"/>
+  <rect x="7" y="18.3" width="9" height="2.2" rx="1.1" fill="#ffffff" opacity="0.5"/>
+  <rect x="18" y="18.3" width="3" height="2.2" rx="1.1" fill="#2383e2"/>
+</svg>
