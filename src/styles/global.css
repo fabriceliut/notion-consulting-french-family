@@ -509,7 +509,8 @@ strong {
 .compare-wrap {
   border: 1px solid var(--border);
   border-radius: var(--r-card);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: var(--shadow-card);
   background: var(--surface);
 }
@@ -1041,6 +1042,87 @@ strong {
   }
   .compare td.crit {
     width: 34%;
+  }
+}
+
+/* Tableau comparatif -> cartes empilées et lisibles sur mobile */
+@media (max-width: 640px) {
+  .compare-wrap {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    overflow: visible;
+  }
+  .compare {
+    font-size: 1rem;
+  }
+  /* Masque l'en-tête (les libellés sont repris par ligne) */
+  .compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .compare,
+  .compare tbody,
+  .compare tr,
+  .compare td {
+    display: block;
+  }
+  .compare tr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .compare tbody tr:last-child {
+    margin-bottom: 0;
+  }
+  .compare td {
+    border: none;
+    padding: 0;
+  }
+  .compare td.crit {
+    width: auto;
+    font-size: 1.08rem;
+    font-weight: 700;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .compare td[data-label] {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+  .compare td[data-label] + td[data-label] {
+    margin-top: 8px;
+  }
+  .compare td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+    color: var(--text-faint);
+    margin-bottom: 4px;
+  }
+  .compare td.col-notion {
+    background: color-mix(in oklch, var(--primary) 6%, transparent);
+    font-weight: 550;
+  }
+  .compare td.col-notion::before {
+    color: var(--primary);
+  }
+  .compare td.col-other {
+    background: var(--surface-2);
   }
 }
 

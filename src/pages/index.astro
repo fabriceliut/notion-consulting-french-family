@@ -203,8 +203,8 @@ const formAction = CONTACT_ACTION;
               compareRows.map((row) => (
                 <tr>
                   <td class="crit">{row.crit}</td>
-                  <td class="col-notion">{row.notion}</td>
-                  <td>{row.other}</td>
+                  <td class="col-notion" data-label="Notion">{row.notion}</td>
+                  <td class="col-other" data-label="Suites Google / Microsoft">{row.other}</td>
                 </tr>
               ))
             }
