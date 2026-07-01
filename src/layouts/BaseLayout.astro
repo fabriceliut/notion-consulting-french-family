@@ -125,14 +125,14 @@ const ogImage = absoluteUrl(SITE.ogImage, site);
           revealEls.forEach((el) => io.observe(el));
         }
 
-        // Formulaire de contact (soumission AJAX Formspree + fallback natif).
+        // Formulaire de contact (soumission AJAX + fallback natif).
         const form = document.getElementById("contact-form") as HTMLFormElement | null;
         if (form) {
           const status = form.querySelector<HTMLElement>(".form-status");
+          const ajax = form.dataset.ajax;
           form.addEventListener("submit", (ev) => {
-            const action = form.getAttribute("action") || "";
-            // Endpoint non configuré : on laisse la soumission native (fallback).
-            if (action.includes("VOTRE_ID_FORMSPREE")) return;
+            // Pas d'endpoint AJAX : on laisse la soumission native (fallback).
+            if (!ajax) return;
             ev.preventDefault();
             const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
             let label = "";
@@ -141,7 +141,7 @@ const ogImage = absoluteUrl(SITE.ogImage, site);
               btn.disabled = true;
               btn.textContent = "Envoi…";
             }
-            fetch(action, {
+            fetch(ajax, {
               method: "POST",
               body: new FormData(form),
               headers: { Accept: "application/json" },

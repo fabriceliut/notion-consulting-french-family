@@ -9,9 +9,17 @@ export const SITE = {
   lang: "fr",
   themeColor: "#ffffff",
   ogImage: "/assets/og-image.png",
-  // Placeholder à remplacer par votre endpoint Formspree (https://formspree.io).
-  formspreeId: "VOTRE_ID_FORMSPREE",
+  // Adresse qui reçoit les messages du formulaire de contact.
+  // Le formulaire utilise FormSubmit.co (sans backend) : les soumissions sont
+  // envoyées par mail à cette adresse. Une confirmation unique est demandée à
+  // la 1re soumission (cliquer le lien reçu par mail pour activer).
+  contactEmail: "fabrice@liut.me",
 } as const;
+
+/** Endpoint FormSubmit pour la soumission native (fallback sans JS). */
+export const CONTACT_ACTION = `https://formsubmit.co/${SITE.contactEmail}`;
+/** Endpoint FormSubmit AJAX (réponse JSON) pour la soumission asynchrone. */
+export const CONTACT_AJAX = `https://formsubmit.co/ajax/${SITE.contactEmail}`;
 
 export const NAV_LINKS = [
   { href: "/#raison-detre", label: "Raison d’être" },

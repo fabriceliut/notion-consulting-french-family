@@ -114,7 +114,7 @@ zone `.prose` de la fiche.
 ## Variables à remplacer
 | Variable | Emplacement | Description |
 | --- | --- | --- |
-| `VOTRE_ID_FORMSPREE` | [`src/lib/site.ts`](src/lib/site.ts) (`SITE.formspreeId`) | Endpoint [Formspree](https://formspree.io). Tant qu'il n'est pas remplacé, le formulaire utilise le fallback natif (pas d'AJAX). |
+| `contactEmail` | [`src/lib/site.ts`](src/lib/site.ts) (`SITE.contactEmail`) | Adresse qui reçoit les messages du formulaire. Le formulaire passe par [FormSubmit.co](https://formsubmit.co) (sans backend) : à la **1re soumission**, un mail de confirmation est envoyé à cette adresse — cliquez le lien une fois pour activer. Ensuite les messages arrivent directement par mail. |
 | `site` / `base` / CNAME | [`astro.config.mjs`](astro.config.mjs), [`public/CNAME`](public/CNAME) | Domaine de déploiement (voir ci-dessus). |
 | `og-image.png` | [`public/assets/og-image.png`](public/assets/og-image.png) | Image Open Graph 1200×630 (déjà fournie, remplaçable). |
 
