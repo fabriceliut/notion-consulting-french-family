@@ -495,6 +495,12 @@ strong {
 .nav-actions--minimal .lbl-short {
   display: none;
 }
+/* Écran large : les CTA vivent dans le menu hamburger, pas dans la barre */
+@media (min-width: 1024px) {
+  .nav-panel .nav-actions {
+    display: none;
+  }
+}
 
 /* Hamburger button + animated bars */
 .nav-toggle {
