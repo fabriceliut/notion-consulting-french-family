@@ -588,6 +588,21 @@ strong {
   border-style: dashed;
   background: transparent;
 }
+.join-cta {
+  margin-top: clamp(36px, 5vw, 56px);
+  text-align: center;
+}
+.join-cta-note {
+  margin-top: 16px;
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+.join-cta-note a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .cc-top {
   display: flex;
   align-items: center;

@@ -25,6 +25,7 @@ export const NAV_LINKS = [
   { href: "/#raison-detre", label: "Raison d’être" },
   { href: "/#pourquoi-notion", label: "Pourquoi Notion" },
   { href: "/#consultants", label: "Consultants" },
+  { href: "/#rejoindre", label: "Rejoindre" },
   { href: "/#contact", label: "Contact" },
 ] as const;
 

@@ -64,6 +64,29 @@ const iaFeature = {
   text: "Une IA qui travaille directement dans vos données : recherche, rédaction, agents et automatisations. Comme dans aucun autre outil.",
 };
 
+const joinFeatures = [
+  {
+    ico: "🇫🇷",
+    title: "Une seule bannière",
+    text: "Plutôt que chacun dans son coin, un collectif unique qui communique sous une même bannière. Ensemble, on pèse bien plus fort face à Google, Microsoft et les suites en place.",
+  },
+  {
+    ico: "📈",
+    title: "Un marché immense à ouvrir",
+    text: "Des centaines de milliers de TPE, PME et PMI françaises ne sont pas encore sur Notion. En unissant nos forces, on fait d’abord grandir le marché — puis on se le partage.",
+  },
+  {
+    ico: "📍",
+    title: "La priorité au local",
+    text: "Chaque membre rayonne sur son territoire, en présentiel. Moins de visio et de trajets vers Paris, plus de projets avec les acteurs économiques de votre bassin de vie.",
+  },
+  {
+    ico: "🤝",
+    title: "Co-construit avec vous",
+    text: "Cette page n’est qu’une première pierre. Le collectif se bâtit à plusieurs mains : les prochaines étapes se décideront avec celles et ceux qui le rejoignent.",
+  },
+];
+
 const compareRows = [
   {
     crit: "Structure",
@@ -130,7 +153,7 @@ const formAction = CONTACT_ACTION;
         </p>
         <div class="hero-cta" data-reveal data-reveal-delay="180">
           <a class="btn btn--primary btn--lg" href={withBase("/#consultants")}>Trouver un consultant</a>
-          <a class="btn btn--secondary btn--lg" href={withBase("/#contact")}>Rejoindre le collectif</a>
+          <a class="btn btn--secondary btn--lg" href={withBase("/#rejoindre")}>Rejoindre le collectif</a>
         </div>
         <p class="hero-note" data-reveal data-reveal-delay="220">
           Indépendants · Qualifiés · Proches du terrain, partout en France.
@@ -319,20 +342,55 @@ const formAction = CONTACT_ACTION;
           data-reveal-delay={consultants.length * 80}
         >
           <div>
-            <p class="cc-name" style="margin-bottom:8px">Vous êtes consultant Notion&nbsp;?</p>
+            <p class="cc-name" style="margin-bottom:8px">Vous êtes consultant ou ambassadeur&nbsp;?</p>
             <p class="cc-bio">
               Le collectif s’agrandit. Rejoignez des experts indépendants qui poussent Notion en
               France.
             </p>
-            <a class="btn btn--primary" href={withBase("/#contact")}>Rejoindre le collectif</a>
+            <a class="btn btn--primary" href={withBase("/#rejoindre")}>En savoir plus</a>
           </div>
         </article>
       </div>
     </div>
   </section>
 
+  <!-- REJOINDRE LE COLLECTIF -->
+  <section class="section" id="rejoindre">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Consultants &amp; ambassadeurs Notion</span>
+        <h2>Construisons le collectif Notion France, ensemble.</h2>
+        <p>
+          Notre conviction : en nous réunissant en un seul collectif d’experts et d’ambassadeurs
+          Notion, plutôt qu’en multipliant les initiatives isolées, nous faisons peser Notion bien
+          plus fort en France — et nous ouvrons ensemble un marché immense.
+        </p>
+      </div>
+      <div class="card-grid">
+        {
+          joinFeatures.map((f, i) => (
+            <article class="feature" data-reveal data-reveal-delay={i * 60}>
+              <div class="ico" aria-hidden="true">
+                {f.ico}
+              </div>
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
+            </article>
+          ))
+        }
+      </div>
+      <div class="join-cta" data-reveal data-reveal-delay="120">
+        <a class="btn btn--primary btn--lg" href={withBase("/#contact")}>Rejoindre le collectif</a>
+        <p class="join-cta-note">
+          Vous animez déjà une dynamique similaire&nbsp;?{" "}
+          <a href={withBase("/#contact")}>Parlons-nous</a> — faisons-le ensemble plutôt qu’en double.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
-  <section class="section" id="contact">
+  <section class="section section--warm" id="contact">
     <div class="container">
       <div class="contact-layout">
         <div class="section-head" style="margin-bottom:0" data-reveal>
