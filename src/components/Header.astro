@@ -18,33 +18,44 @@ const { variant = "full" } = Astro.props;
     {
       variant === "full" ? (
         <>
-          <nav aria-label="Navigation principale">
-            <ul class="nav-links">
-              {NAV_LINKS.map((link) => (
-                <li>
-                  <a href={withBase(link.href)}>{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div class="nav-actions">
-            <a class="btn btn--secondary" href={withBase("/#contact")}>
-              Rejoindre le collectif
-            </a>
-            <a class="btn btn--primary" href={withBase("/#consultants")}>
-              Trouver un consultant
-            </a>
-            <button class="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              </svg>
-            </button>
+          <div class="nav-panel" id="site-menu">
+            <nav class="nav-nav" aria-label="Navigation principale">
+              <ul class="nav-links">
+                {NAV_LINKS.map((link) => (
+                  <li>
+                    <a href={withBase(link.href)}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div class="nav-actions">
+              <a class="btn btn--secondary" href={withBase("/#contact")}>
+                Rejoindre le collectif
+              </a>
+              <a class="btn btn--primary" href={withBase("/#consultants")}>
+                Trouver un consultant
+              </a>
+            </div>
           </div>
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-label="Ouvrir le menu"
+            aria-controls="site-menu"
+            aria-expanded="false"
+          >
+            <span class="bars" aria-hidden="true">
+              <span class="bar" />
+              <span class="bar" />
+              <span class="bar" />
+            </span>
+          </button>
         </>
       ) : (
-        <div class="nav-actions">
+        <div class="nav-actions nav-actions--minimal">
           <a class="btn btn--primary" href={withBase("/#consultants")}>
-            Tous les consultants
+            <span class="lbl-long">Tous les consultants</span>
+            <span class="lbl-short">Consultants</span>
           </a>
         </div>
       )

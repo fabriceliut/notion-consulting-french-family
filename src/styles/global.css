@@ -297,9 +297,8 @@ strong {
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   height: 64px;
-  gap: 20px;
+  gap: 16px;
 }
 .brand {
   display: inline-flex;
@@ -308,6 +307,7 @@ strong {
   color: var(--text);
   font-weight: 700;
   letter-spacing: -0.02em;
+  flex: none;
 }
 .brand:hover {
   color: var(--text);
@@ -319,21 +319,36 @@ strong {
 }
 .brand-text {
   font-size: 1.02rem;
+  white-space: nowrap;
+}
+
+/* Nav panel — inline row on desktop, animated dropdown on smaller screens */
+.nav-panel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(12px, 2vw, 28px);
+  flex: 1;
+}
+.nav-nav {
+  display: flex;
 }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 .nav-links a {
+  display: block;
   color: var(--text-muted);
   font-weight: 500;
   font-size: 0.95rem;
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 7px;
+  white-space: nowrap;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 .nav-links a:hover {
@@ -344,22 +359,55 @@ strong {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: none;
 }
+.nav-actions .btn {
+  white-space: nowrap;
+}
+.nav-actions--minimal .lbl-short {
+  display: none;
+}
+
+/* Hamburger button + animated bars */
 .nav-toggle {
   display: none;
   background: transparent;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
+  border-radius: 9px;
+  width: 42px;
+  height: 42px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   color: var(--text);
+  flex: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
-.nav-toggle svg {
+.nav-toggle:hover {
+  background: color-mix(in oklch, var(--text) 5%, transparent);
+}
+.nav-toggle .bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.nav-toggle .bar {
+  display: block;
   width: 20px;
-  height: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+.site-header.nav-open .nav-toggle .bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.site-header.nav-open .nav-toggle .bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.4);
+}
+.site-header.nav-open .nav-toggle .bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* =============================================================
@@ -875,34 +923,137 @@ strong {
     grid-template-columns: 1fr;
   }
 }
-@media (max-width: 720px) {
-  .nav-links,
-  .nav-actions .btn--secondary {
-    display: none;
+
+/* Collapse the main navigation into an animated hamburger menu */
+@media (max-width: 1023.98px) {
+  .nav {
+    justify-content: space-between;
   }
   .nav-toggle {
     display: inline-flex;
   }
-  .site-header.nav-open .nav-links {
-    display: flex;
+  .site-header.nav-open {
+    background: color-mix(in oklch, var(--bg) 94%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom-color: var(--border);
+  }
+  .nav-panel {
     position: absolute;
     inset: 64px 0 auto;
     flex-direction: column;
     align-items: stretch;
-    gap: 2px;
-    padding: 12px var(--gutter) 20px;
-    background: var(--bg);
+    justify-content: flex-start;
+    gap: 4px;
+    padding: 14px var(--gutter) 22px;
+    background: color-mix(in oklch, var(--bg) 94%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-elevate);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
   }
-  .site-header.nav-open .nav-links a {
-    padding: 12px;
-    font-size: 1rem;
+  .site-header.nav-open .nav-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
   }
+  .nav-nav {
+    width: 100%;
+  }
+  .nav-links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    width: 100%;
+  }
+  .nav-links a {
+    padding: 12px 14px;
+    font-size: 1.02rem;
+    border-radius: 10px;
+  }
+  .nav-panel .nav-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-panel .nav-actions .btn {
+    width: 100%;
+  }
+  /* Staggered entrance for menu items */
+  .nav-links li,
+  .nav-panel .nav-actions .btn {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .site-header.nav-open .nav-links li,
+  .site-header.nav-open .nav-panel .nav-actions .btn {
+    opacity: 1;
+    transform: none;
+  }
+  .site-header.nav-open .nav-links li:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+  .site-header.nav-open .nav-links li:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+  .site-header.nav-open .nav-links li:nth-child(3) {
+    transition-delay: 0.15s;
+  }
+  .site-header.nav-open .nav-links li:nth-child(4) {
+    transition-delay: 0.2s;
+  }
+  .site-header.nav-open .nav-panel .nav-actions .btn:nth-child(1) {
+    transition-delay: 0.24s;
+  }
+  .site-header.nav-open .nav-panel .nav-actions .btn:nth-child(2) {
+    transition-delay: 0.28s;
+  }
+}
+
+@media (max-width: 720px) {
   .field-row {
     grid-template-columns: 1fr;
   }
   .compare td.crit {
     width: 34%;
+  }
+}
+
+/* Very small screens — shorten the minimal-header CTA to avoid wrapping */
+@media (max-width: 479.98px) {
+  .brand-text {
+    font-size: 0.95rem;
+  }
+  .nav-actions--minimal .lbl-long {
+    display: none;
+  }
+  .nav-actions--minimal .lbl-short {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-panel,
+  .nav-links li,
+  .nav-panel .nav-actions .btn,
+  .nav-toggle .bar {
+    transition: none !important;
+  }
+  .nav-links li,
+  .nav-panel .nav-actions .btn {
+    opacity: 1;
+    transform: none;
   }
 }
