@@ -1,6 +1,19 @@
 @import "tailwindcss";
 
 /* =============================================================
+   Polices auto-hébergées (Inter variable, sous-ensemble latin)
+   Zéro requête tierce bloquante — meilleur FCP/LCP sur mobile.
+   Un seul fichier woff2 couvre tous les poids (axe wght 100–900).
+   ============================================================= */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/inter-latin-var.woff2") format("woff2");
+}
+
+/* =============================================================
    Design tokens — source de vérité (voir DESIGN.md)
    Notion « Editorial warm » : blanc/crème chaud, texte #37352f,
    accent unique bleu Notion #2383e2, couleurs en oklch.

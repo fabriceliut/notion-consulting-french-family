@@ -3,6 +3,7 @@ import { SITE, absoluteUrl, withBase } from "../lib/site";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+import interFont from "../fonts/inter-latin-var.woff2?url";
 
 interface Props {
   title?: string;
@@ -57,12 +58,13 @@ const ogImage = absoluteUrl(SITE.ogImage, site);
     <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
     <link rel="manifest" href={withBase("/site.webmanifest")} />
 
-    <!-- Polices : preconnect + stylesheet (pas d'@import CSS) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Police auto-hébergée : préchargée pour un LCP rapide -->
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="preload"
+      href={interFont}
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     <slot name="head" />
