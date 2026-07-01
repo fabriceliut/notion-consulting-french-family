@@ -25,12 +25,12 @@
   --surface: oklch(1 0 0);
   --surface-2: oklch(0.988 0.002 85);
   --text: oklch(0.31 0.006 65); /* #37352f near-black chaud */
-  --text-muted: color-mix(in oklch, var(--text) 62%, transparent);
-  --text-faint: color-mix(in oklch, var(--text) 42%, transparent);
+  --text-muted: color-mix(in oklch, var(--text) 72%, transparent); /* AA >=4.5:1 */
+  --text-faint: color-mix(in oklch, var(--text) 66%, transparent); /* AA >=4.5:1 */
   --border: color-mix(in oklch, var(--text) 12%, transparent);
   --border-strong: color-mix(in oklch, var(--text) 20%, transparent);
 
-  --primary: oklch(0.63 0.153 251); /* #2383e2 bleu Notion */
+  --primary: oklch(0.56 0.153 251); /* bleu Notion assombri pour AA (#1776ca, 4.7:1) */
   --primary-hover: color-mix(in oklch, var(--primary) 88%, black);
   --primary-active: color-mix(in oklch, var(--primary) 76%, black);
   --primary-soft: color-mix(in oklch, var(--primary) 12%, white);
